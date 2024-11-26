@@ -2,15 +2,16 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
+    id ("androidx.navigation.safeargs.kotlin")
 }
 
 android {
     namespace = "kg.less.hm02_07m"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "kg.less.hm02_07m"
-        minSdk = 30
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -40,15 +41,7 @@ android {
 }
 
 dependencies {
-//    implementation(libs.androidx.navigation.fragment.ktx)
-//    implementation(libs.androidx.navigation.ui.ktx)
 
-
-    val room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    ksp("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -58,7 +51,14 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation("io.insert-koin:koin-android:3.5.0")
-    implementation(libs.insert.koin.koin.android)
+    val room_version = "2.6.1"
+    val navVersion = "2.8.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation(libs.koin.android)
+    implementation ("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation ("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 }

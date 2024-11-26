@@ -7,6 +7,7 @@ import java.time.LocalDateTime
 class InsertTaskUseCase(private val taskManagerRepository: TaskManagerRepository) {
 
     suspend fun insertTask(taskModel: TaskModel): String {
+
         val existingTask = taskManagerRepository.getTaskByName(taskModel.taskName)
         if (existingTask != null) {
             return "Такое уже есть"
@@ -18,6 +19,7 @@ class InsertTaskUseCase(private val taskManagerRepository: TaskManagerRepository
         if (taskDate == null || taskDate < currentHour) {
             return "Ты че в прошлом живешь"
         }
+        taskManagerRepository.insertTask(taskModel)
         return "Задача успешно добавлена"
     }
 }

@@ -1,8 +1,8 @@
 package kg.less.hm02_07m
 
 import android.app.Application
-import kg.less.hm02_07m.data.database.di.dataModules
-import kg.less.hm02_07m.presentation.module.uiModule
+import kg.less.hm02_07m.data.di.dataModules
+import kg.less.hm02_07m.presentation.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
