@@ -13,7 +13,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import kg.less.hm02_07m.R
 import kg.less.hm02_07m.databinding.FragmentAddTaskBinding
-import kg.less.hm02_07m.presentation.fragments.viewmodel.TaskViewModel
+import kg.less.hm02_07m.presentation.fragments.taskList.TaskViewModel
 import kg.less.hm02_07m.presentation.model.TaskUI
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

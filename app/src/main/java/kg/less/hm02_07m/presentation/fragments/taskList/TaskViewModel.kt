@@ -1,4 +1,4 @@
-package kg.less.hm02_07m.presentation.fragments.viewmodel
+package kg.less.hm02_07m.presentation.fragments.taskList
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -8,6 +8,7 @@ import kg.less.hm02_07m.domain.usecase.GetTaskUseCase
 import kg.less.hm02_07m.domain.usecase.InsertTaskUseCase
 import kg.less.hm02_07m.domain.usecase.TaskDelete
 import kg.less.hm02_07m.domain.usecase.UpdateTaskUseCase
+import kg.less.hm02_07m.presentation.fragments.base.BaseViewModel
 import kg.less.hm02_07m.presentation.model.TaskUI
 import kg.less.hm02_07m.presentation.model.toDomain
 import kg.less.hm02_07m.presentation.model.toUi
@@ -20,42 +21,29 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class TaskViewModel(
-    private val insertTaskUseCase: InsertTaskUseCase,
     private val getAllNotesUseCase: GetAllNotesUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val delete: TaskDelete,
     private val getTaskUseCase: GetTaskUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _tasksStateFlow = MutableStateFlow<List<TaskUI>>(emptyList())
     val taskFlow: StateFlow<List<TaskUI>> = _tasksStateFlow.asStateFlow()
 
-    private val _insertMessageStateFlow = MutableStateFlow(String())
-    val insertMessageFlow: StateFlow<String> = _insertMessageStateFlow.asStateFlow()
+    fun fetchTask() {
+        runLaunchIO() {
+            val task = getTaskUseCase(1)
+            task?.let {
 
-    private val _updateMessageStateFlow = MutableStateFlow(String())
-    val updateMessageFlow: StateFlow<String> = _updateMessageStateFlow
-
-    fun insertTask(taskUI: TaskUI) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val message = insertTaskUseCase.insertTask(taskUI.toDomain())
-            _insertMessageStateFlow.value = message
+            }
         }
     }
 
     fun loadTasks() {
-        viewModelScope.launch(Dispatchers.IO) {
-            getAllNotesUseCase().onEach {
-                _tasksStateFlow.value = it.map { model -> model.toUi() }
+        runLaunchIO {
+            getAllNotesUseCase().onEach { taskList ->
+                _tasksStateFlow.value = taskList.map { it.toUi() }
             }.collect()
-        }
-    }
-
-    suspend fun getTask(id: Int) = getTaskUseCase(id)?.toUi()
-
-    fun updateTask(taskUI: TaskUI) {
-        viewModelScope.launch(Dispatchers.IO) {
-            updateTaskUseCase.updateTask(taskUI.toDomain())
         }
     }
 

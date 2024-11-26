@@ -1,4 +1,4 @@
-package kg.less.hm02_07m.presentation.fragments
+package kg.less.hm02_07m.presentation.fragments.detail
 
 import android.net.Uri
 import android.os.Bundle
@@ -9,17 +9,18 @@ import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kg.less.hm02_07m.databinding.FragmentDetailBinding
-import kg.less.hm02_07m.presentation.fragments.viewmodel.TaskViewModel
+import kg.less.hm02_07m.presentation.fragments.taskList.TaskViewModel
 import kg.less.hm02_07m.presentation.model.TaskUI
 import kotlinx.coroutines.launch
 
+@Suppress("UNREACHABLE_CODE")
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private val viewModel: TaskViewModel by viewModel()
-
-    private var taskId: Int = -1
+    private val viewModel: DetailViewModel by viewModel()
+    private val navArgs by navArgs<DetailFragmentArgs>()
     private var taskUI: TaskUI? = null
 
     override fun onCreateView(
@@ -28,18 +29,15 @@ class DetailFragment : Fragment() {
     ): View? {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
-        arguments?.let {
-            taskId = it.getInt("taskId")
-        }
-        viewModel.viewModelScope.launch {
-            viewModel.getTask(id)
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateUI()
         setUpListeners()
+        viewModel.viewModelScope.launch {
+            taskUI = viewModel.getTask(navArgs.taskId)
+        }
     }
 
     private fun updateUI() {
@@ -58,7 +56,6 @@ class DetailFragment : Fragment() {
             )
             updatedTask?.let {
                 viewModel.updateTask(it)
-                findNavController().navigateUp()
             }
         }
     }

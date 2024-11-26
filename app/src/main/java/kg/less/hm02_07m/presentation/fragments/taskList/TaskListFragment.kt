@@ -1,4 +1,4 @@
-package kg.less.hm02_07m.presentation.fragments
+package kg.less.hm02_07m.presentation.fragments.taskList
 
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import kg.less.hm02_07m.R
+import kg.less.hm02_07m.addtask.TaskActivity
 import kg.less.hm02_07m.databinding.FragmentTaskListBinding
 import kg.less.hm02_07m.presentation.fragments.adapter.TaskAdapter
-import kg.less.hm02_07m.presentation.fragments.viewmodel.TaskViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -32,24 +31,32 @@ class TaskListFragment : Fragment() {
         return binding.root
     }
 
+    companion object{
+        fun newInstance(): TaskListFragment{
+            return TaskListFragment()
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addTask()
         initialize()
         showTask()
         viewModel.loadTasks()
+        viewModel.fetchTask()
     }
 
     private fun addTask() {
         binding.btnAdd.setOnClickListener{
-            findNavController().navigate(R.id.action_taskListFragment_to_addTaskFragment)
+            val intent = TaskActivity.createIntent(requireContext())
+            startActivity(intent)
         }
     }
 
     private fun initialize() {
         taskAdapter = TaskAdapter(emptyList(), { task ->
             viewModel.viewModelScope.launch {
-                viewModel.getTask(id)
+                viewModel.fetchTask()
             }
             val action = TaskListFragmentDirections.actionTaskListFragmentToDetailFragment(task)
             findNavController().navigate(action)

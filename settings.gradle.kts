@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "hm02_07m"
 include(":app")
+include(":addtask")
+include(":app", ":addtask")
  

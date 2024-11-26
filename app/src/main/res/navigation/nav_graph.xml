@@ -6,7 +6,7 @@
     app:startDestination="@id/taskListFragment">
     <fragment
         android:id="@+id/taskListFragment"
-        android:name="kg.less.hm02_07m.presentation.fragments.TaskListFragment"
+        android:name="kg.less.hm02_07m.presentation.fragments.taskList.TaskListFragment"
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list" >
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="kg.less.hm02_07m.presentation.fragments.DetailFragment"
+        android:name="kg.less.hm02_07m.presentation.fragments.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument

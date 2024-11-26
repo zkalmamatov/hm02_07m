@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#CCCCCC"
     android:orientation="vertical"
-    android:padding="8dp"
-    tools:context=".presentation.fragments.TaskListFragment">
-
+    android:padding="4dp"
+    tools:context=".presentation.fragments.taskList.TaskListFragment">
 
     <TextView
-        android:paddingTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="24dp"
         android:text="СПИСОК ЗАДАЧ"
         android:textColor="#212121"
-        android:gravity="center"
         android:textSize="28sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/corners"
+            android:text="+"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_task"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+        tools:listitem="@layout/item_task" />
 
-    <Button
-        android:id="@+id/btn_add"
-        android:background="@drawable/corners"
-        android:text="+"
-        android:layout_gravity="end|bottom"
-        android:textSize="28sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
